@@ -7,20 +7,44 @@
   <title>Frases de La Vida</title>
 
   <style>
-
     *{
       margin:0;
       padding:0;
       box-sizing:border-box;
     }
 
+    :root{
+      --bg-main: linear-gradient(135deg, #dbeafe, #eff6ff, #ffffff);
+      --card-bg: white;
+      --text-main: #222;
+      --text-soft: #666;
+      --header-bg: rgba(255,255,255,0.9);
+      --shadow: rgba(0,0,0,0.12);
+      --button-bg: #222;
+      --button-text: white;
+    }
+
+    body.dark{
+      --bg-main:
+        radial-gradient(circle at top, rgba(59,130,246,0.28), transparent 35%),
+        linear-gradient(135deg, #020617, #0f172a, #1e3a8a);
+      --card-bg: rgba(255,255,255,0.08);
+      --text-main: #f8fafc;
+      --text-soft: #cbd5e1;
+      --header-bg: rgba(2,6,23,0.85);
+      --shadow: rgba(0,0,0,0.35);
+      --button-bg: #67e8f9;
+      --button-text: #020617;
+    }
+
     body{
-      background:#f5f5f5;
-      font-family:Arial, sans-serif;
-      color:#222;
+      background: var(--bg-main);
+      font-family: Arial, sans-serif;
+      color: var(--text-main);
       min-height:100vh;
       display:flex;
       flex-direction:column;
+      transition:0.4s;
     }
 
     header{
@@ -29,15 +53,16 @@
       display:flex;
       justify-content:space-between;
       align-items:center;
-      background:white;
-      box-shadow:0 2px 10px rgba(0,0,0,0.08);
+      background:var(--header-bg);
+      box-shadow:0 2px 10px var(--shadow);
       flex-wrap:wrap;
       gap:10px;
+      backdrop-filter: blur(14px);
     }
 
     .email{
       font-size:14px;
-      color:#444;
+      color:var(--text-soft);
     }
 
     .socials{
@@ -49,21 +74,22 @@
 
     .socials a{
       text-decoration:none;
-      color:#222;
+      color:var(--text-main);
       font-weight:bold;
       transition:0.3s;
     }
 
     .socials a:hover{
-      color:#666;
+      opacity:0.7;
     }
 
-    .admin-btn{
+    .admin-btn,
+    .theme-btn{
       padding:10px 18px;
       border:none;
       border-radius:10px;
-      background:#111827;
-      color:white;
+      background:var(--button-bg);
+      color:var(--button-text);
       cursor:pointer;
       font-weight:bold;
     }
@@ -78,28 +104,32 @@
     }
 
     .frase-box{
-      background:white;
+      background:var(--card-bg);
       padding:50px 30px;
-      border-radius:20px;
-      max-width:700px;
+      border-radius:24px;
+      max-width:760px;
       width:100%;
-      box-shadow:0 5px 20px rgba(0,0,0,0.1);
+      box-shadow:0 12px 35px var(--shadow);
+      backdrop-filter: blur(18px);
+      border:1px solid rgba(255,255,255,0.18);
     }
 
     h1{
       font-size:40px;
       margin-bottom:30px;
+      color:var(--text-main);
     }
 
     #frase{
       font-size:26px;
       line-height:1.6;
       margin-bottom:25px;
-      color:#333;
+      color:var(--text-main);
+      white-space:pre-line;
     }
 
     .fecha{
-      color:#666;
+      color:var(--text-soft);
       margin-bottom:20px;
       font-size:15px;
     }
@@ -107,7 +137,7 @@
     .firma{
       font-size:20px;
       font-style:italic;
-      color:#666;
+      color:var(--text-soft);
     }
 
     button{
@@ -115,44 +145,51 @@
       padding:12px 25px;
       border:none;
       border-radius:10px;
-      background:#222;
-      color:white;
+      background:var(--button-bg);
+      color:var(--button-text);
       cursor:pointer;
       font-size:16px;
       transition:0.3s;
+      font-weight:bold;
     }
 
     button:hover{
-      background:#444;
+      transform:translateY(-2px);
+      opacity:0.9;
     }
 
     footer{
       text-align:center;
       padding:20px;
-      background:white;
+      background:var(--header-bg);
       font-size:14px;
-      color:#555;
-      box-shadow:0 -2px 10px rgba(0,0,0,0.05);
+      color:var(--text-soft);
+      box-shadow:0 -2px 10px var(--shadow);
+      backdrop-filter: blur(14px);
     }
 
     .panel-admin{
       position:fixed;
       inset:0;
-      background:rgba(0,0,0,0.7);
+      background:rgba(0,0,0,0.75);
       display:none;
       justify-content:center;
       align-items:center;
       z-index:9999;
       padding:20px;
+      overflow-y:auto;
     }
 
     .admin-box{
       background:white;
+      color:#222;
       width:100%;
-      max-width:500px;
+      max-width:620px;
       padding:30px;
       border-radius:20px;
       text-align:center;
+      max-height:90vh;
+      overflow-y:auto;
     }
 
     .admin-box h2{
@@ -177,10 +214,55 @@
     .admin-box button{
       width:100%;
       margin-top:10px;
+      background:#222;
+      color:white;
+    }
+
+    .lista-frases{
+      margin-top:25px;
+      text-align:left;
+    }
+
+    .frase-item{
+      background:#f3f4f6;
+      border:1px solid #ddd;
+      border-radius:14px;
+      padding:15px;
+      margin-bottom:12px;
+    }
+
+    .frase-item p{
+      white-space:pre-line;
+      margin-bottom:8px;
+      color:#222;
+      line-height:1.5;
+    }
+
+    .frase-item small{
+      color:#666;
+    }
+
+    .acciones-frase{
+      display:flex;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .acciones-frase button{
+      margin-top:0;
+      padding:10px;
+      font-size:14px;
+    }
+
+    .editar{
+      background:#2563eb !important;
+    }
+
+    .eliminar{
+      background:#dc2626 !important;
     }
 
     @media(max-width:768px){
-
       header{
         flex-direction:column;
       }
@@ -193,40 +275,43 @@
         font-size:22px;
       }
 
+      .acciones-frase{
+        flex-direction:column;
+      }
     }
-
   </style>
 </head>
+
 <body>
 
 <header>
-
   <div class="email">
     abaezjorge@gmail.com
   </div>
 
   <div class="socials">
-
     <a href="#">Instagram</a>
     <a href="#">Facebook</a>
     <a href="#">TikTok</a>
 
+    <button class="theme-btn" onclick="cambiarModo()" id="modoBtn">
+      🌙 Oscuro
+    </button>
+
     <button class="admin-btn" onclick="abrirAdmin()">
       Administración
     </button>
-
   </div>
-
 </header>
 
 <main>
-
   <div class="frase-box">
-
     <h1>Frases de La Vida</h1>
 
     <div id="frase">
-      “El ajedrez no solo mueve piezas, también mueve la mente.”
+      “A veces, los mejores compañeros de chess estuvieron cerca de nosotros… y nunca lo vimos.
+
+hasta que la partida inició ~”
     </div>
 
     <div class="fecha" id="fechaPublicacion">
@@ -240,178 +325,244 @@
     <button onclick="nuevaFrase()">
       Nueva Frase
     </button>
-
   </div>
-
 </main>
 
 <footer>
   © 2026 Reservado por derechos de autor • By Andy
 </footer>
 
-<!-- PANEL ADMIN -->
-
 <div class="panel-admin" id="panelAdmin">
-
   <div class="admin-box">
-
     <h2>🔐 Panel Administración</h2>
 
     <div id="loginArea">
-
       <input type="password" id="claveAdmin" placeholder="Ingresa la clave">
 
       <button onclick="verificarClave()">
         Entrar
       </button>
-
     </div>
 
     <div id="editorArea" style="display:none;">
-
       <textarea id="nuevaFraseTexto" placeholder="Escribe tu nueva frase..."></textarea>
 
-      <button onclick="publicarFrase()">
+      <button onclick="publicarFrase()" id="btnPublicar">
         Publicar Frase
       </button>
 
+      <button onclick="cancelarEdicion()" id="btnCancelar" style="display:none;background:#6b7280;">
+        Cancelar Edición
+      </button>
+
+      <div class="lista-frases">
+        <h3>📚 Frases Publicadas</h3>
+        <div id="listaFrases"></div>
+      </div>
     </div>
 
     <button onclick="cerrarAdmin()">
       Cerrar
     </button>
-
   </div>
-
 </div>
 
 <script>
-
 let frases = JSON.parse(localStorage.getItem("frasesByAndy")) || [
-
   {
-    texto:"El ajedrez no solo mueve piezas, también mueve la mente.",
+    texto:"A veces, los mejores compañeros de chess estuvieron cerca de nosotros… y nunca lo vimos.\n\nhasta que la partida inició ~",
     fecha:"Publicado por By Andy"
   }
-
 ];
 
+let indiceEditando = null;
+
+function guardarFrases(){
+  localStorage.setItem("frasesByAndy", JSON.stringify(frases));
+}
+
 function mostrarFrase(fraseObj){
-
-  document.getElementById("frase").innerText =
-  "“" + fraseObj.texto + "”";
-
-  document.getElementById("fechaPublicacion").innerText =
-  fraseObj.fecha;
-
+  document.getElementById("frase").innerText = "“" + fraseObj.texto + "”";
+  document.getElementById("fechaPublicacion").innerText = fraseObj.fecha;
 }
 
 function nuevaFrase(){
-
   if(frases.length === 0){
-
-    document.getElementById("frase").innerText =
-    "Todavía no hay frases publicadas.";
-
-    document.getElementById("fechaPublicacion").innerText =
-    "Publica tu primera frase desde Administración.";
-
+    document.getElementById("frase").innerText = "Todavía no hay frases publicadas.";
+    document.getElementById("fechaPublicacion").innerText = "Publica tu primera frase desde Administración.";
     return;
-
   }
 
   let random = Math.floor(Math.random() * frases.length);
-
   mostrarFrase(frases[random]);
-
 }
 
 function abrirAdmin(){
-
   document.getElementById("panelAdmin").style.display = "flex";
-
+  renderizarListaFrases();
 }
 
 function cerrarAdmin(){
-
   document.getElementById("panelAdmin").style.display = "none";
-
 }
 
 function verificarClave(){
-
   const clave = document.getElementById("claveAdmin").value;
 
   if(clave === "3321"){
-
     document.getElementById("loginArea").style.display = "none";
-
     document.getElementById("editorArea").style.display = "block";
-
+    renderizarListaFrases();
   }else{
-
     alert("❌ Clave incorrecta");
-
   }
-
 }
 
 function publicarFrase(){
-
   const texto = document.getElementById("nuevaFraseTexto").value;
 
   if(texto.trim() === ""){
-
     alert("Escribe una frase.");
-
     return;
-
   }
 
   const ahora = new Date();
-
   const fecha = ahora.toLocaleDateString();
-
   const hora = ahora.toLocaleTimeString();
 
-  const nueva = {
+  if(indiceEditando !== null){
+    frases[indiceEditando].texto = texto;
+    frases[indiceEditando].fecha = "Editado el " + fecha + " a las " + hora;
 
-    texto:texto,
+    mostrarFrase(frases[indiceEditando]);
 
-    fecha:"Publicado el " + fecha + " a las " + hora
+    indiceEditando = null;
+    document.getElementById("btnPublicar").innerText = "Publicar Frase";
+    document.getElementById("btnCancelar").style.display = "none";
 
-  };
+    alert("✅ Frase editada correctamente");
+  }else{
+    const nueva = {
+      texto:texto,
+      fecha:"Publicado el " + fecha + " a las " + hora
+    };
 
-  frases.unshift(nueva);
+    frases.unshift(nueva);
+    mostrarFrase(nueva);
 
-  localStorage.setItem("frasesByAndy", JSON.stringify(frases));
+    alert("✅ Frase publicada correctamente");
+  }
 
-  mostrarFrase(nueva);
+  guardarFrases();
+  document.getElementById("nuevaFraseTexto").value = "";
+  renderizarListaFrases();
+}
+
+function editarFrase(index){
+  indiceEditando = index;
+
+  document.getElementById("nuevaFraseTexto").value = frases[index].texto;
+  document.getElementById("btnPublicar").innerText = "Guardar Cambios";
+  document.getElementById("btnCancelar").style.display = "block";
+
+  document.getElementById("nuevaFraseTexto").focus();
+}
+
+function cancelarEdicion(){
+  indiceEditando = null;
 
   document.getElementById("nuevaFraseTexto").value = "";
+  document.getElementById("btnPublicar").innerText = "Publicar Frase";
+  document.getElementById("btnCancelar").style.display = "none";
+}
 
-  alert("✅ Frase publicada correctamente");
+function eliminarFrase(index){
+  const confirmar = confirm("¿Seguro que quieres eliminar esta frase?");
 
+  if(!confirmar){
+    return;
+  }
+
+  frases.splice(index, 1);
+  guardarFrases();
+  renderizarListaFrases();
+
+  if(frases.length > 0){
+    mostrarFrase(frases[0]);
+  }else{
+    document.getElementById("frase").innerText = "Todavía no hay frases publicadas.";
+    document.getElementById("fechaPublicacion").innerText = "Publica tu primera frase desde Administración.";
+  }
+
+  alert("🗑️ Frase eliminada correctamente");
+}
+
+function renderizarListaFrases(){
+  const contenedor = document.getElementById("listaFrases");
+
+  if(!contenedor){
+    return;
+  }
+
+  contenedor.innerHTML = "";
+
+  if(frases.length === 0){
+    contenedor.innerHTML = "<p>No hay frases publicadas todavía.</p>";
+    return;
+  }
+
+  frases.forEach((frase, index) => {
+    const item = document.createElement("div");
+    item.className = "frase-item";
+
+    item.innerHTML = `
+      <p>“${frase.texto}”</p>
+      <small>${frase.fecha}</small>
+
+      <div class="acciones-frase">
+        <button class="editar" onclick="editarFrase(${index})">
+          Editar
+        </button>
+
+        <button class="eliminar" onclick="eliminarFrase(${index})">
+          Eliminar
+        </button>
+      </div>
+    `;
+
+    contenedor.appendChild(item);
+  });
+}
+
+function cambiarModo(){
+  document.body.classList.toggle("dark");
+
+  if(document.body.classList.contains("dark")){
+    localStorage.setItem("modoFrases", "oscuro");
+    document.getElementById("modoBtn").innerText = "☀️ Claro";
+  }else{
+    localStorage.setItem("modoFrases", "claro");
+    document.getElementById("modoBtn").innerText = "🌙 Oscuro";
+  }
 }
 
 window.onload = function(){
+  const modoGuardado = localStorage.getItem("modoFrases");
 
-  const guardadas = localStorage.getItem("frasesByAndy");
-
-  if(guardadas){
-
-    frases = JSON.parse(guardadas);
-
+  if(modoGuardado === "oscuro"){
+    document.body.classList.add("dark");
+    document.getElementById("modoBtn").innerText = "☀️ Claro";
   }
 
   if(frases.length > 0){
-
     mostrarFrase(frases[0]);
-
+  }else{
+    document.getElementById("frase").innerText = "Todavía no hay frases publicadas.";
+    document.getElementById("fechaPublicacion").innerText = "Publica tu primera frase desde Administración.";
   }
 
+  guardarFrases();
 }
-
 </script>
 
 </body>
