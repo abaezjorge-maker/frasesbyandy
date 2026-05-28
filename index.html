@@ -1,0 +1,202 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frases de La Vida</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      background:#f5f5f5;
+      font-family:Arial, sans-serif;
+      color:#222;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    header{
+      width:100%;
+      padding:20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      background:white;
+      box-shadow:0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .email{
+      font-size:14px;
+      color:#444;
+    }
+
+    .socials a{
+      text-decoration:none;
+      margin-left:15px;
+      color:#222;
+      font-weight:bold;
+      transition:0.3s;
+    }
+
+    .socials a:hover{
+      color:#666;
+    }
+
+    main{
+      flex:1;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      padding:30px;
+    }
+
+    .frase-box{
+      background:white;
+      padding:50px 30px;
+      border-radius:20px;
+      max-width:700px;
+      width:100%;
+      box-shadow:0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    h1{
+      font-size:40px;
+      margin-bottom:30px;
+    }
+
+    #frase{
+      font-size:26px;
+      line-height:1.6;
+      margin-bottom:30px;
+      color:#333;
+    }
+
+    .firma{
+      font-size:20px;
+      font-style:italic;
+      color:#666;
+    }
+
+    button{
+      margin-top:30px;
+      padding:12px 25px;
+      border:none;
+      border-radius:10px;
+      background:#222;
+      color:white;
+      cursor:pointer;
+      font-size:16px;
+      transition:0.3s;
+    }
+
+    button:hover{
+      background:#444;
+    }
+
+    footer{
+      text-align:center;
+      padding:20px;
+      background:white;
+      font-size:14px;
+      color:#555;
+      box-shadow:0 -2px 10px rgba(0,0,0,0.05);
+    }
+
+    @media(max-width:768px){
+
+      header{
+        flex-direction:column;
+        gap:10px;
+      }
+
+      h1{
+        font-size:30px;
+      }
+
+      #frase{
+        font-size:22px;
+      }
+
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+
+    <div class="email">
+      abaezjorge@gmail.com
+    </div>
+
+    <div class="socials">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#">TikTok</a>
+    </div>
+
+  </header>
+
+  <main>
+
+    <div class="frase-box">
+
+      <h1>Frases de La Vida</h1>
+
+      <div id="frase">
+        “La luz cambia la percepción que tenemos de la vida.”
+      </div>
+
+      <div class="firma">
+        — By Andy
+      </div>
+
+      <button onclick="nuevaFrase()">
+        Nueva Frase
+      </button>
+
+    </div>
+
+  </main>
+
+  <footer>
+    © 2026 Reservado por derechos de autor • By Andy
+  </footer>
+
+  <script>
+
+    const frases = [
+
+      "La luz cambia la percepción que tenemos de la vida.",
+
+      "Nunca es tarde para hacer lo que deberías haber hecho.",
+
+      "Las ideas más grandes nacen en momentos inesperados.",
+
+      "La disciplina vence al talento cuando el talento no trabaja.",
+
+      "Tu mente puede convertirse en tu mayor poder."
+
+    ];
+
+    function nuevaFrase(){
+
+      let random = Math.floor(Math.random() * frases.length);
+
+      document.getElementById("frase").innerText = "“" + frases[random] + "”";
+
+    }
+
+  </script>
+
+</body>
+</html>
+```
