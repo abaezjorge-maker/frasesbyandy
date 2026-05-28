@@ -1,4 +1,4 @@
-```html id="m7kq2x"
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -226,11 +226,11 @@
     <h1>Frases de La Vida</h1>
 
     <div id="frase">
-      “La luz cambia la percepción que tenemos de la vida.”
+      “El ajedrez no solo mueve piezas, también mueve la mente.”
     </div>
 
     <div class="fecha" id="fechaPublicacion">
-      Publicado: Hoy
+      Publicado por By Andy
     </div>
 
     <div class="firma">
@@ -287,21 +287,11 @@
 
 <script>
 
-const frases = [
+let frases = JSON.parse(localStorage.getItem("frasesByAndy")) || [
 
   {
-    texto:"La luz cambia la percepción que tenemos de la vida.",
-    fecha:"Publicado inicialmente"
-  },
-
-  {
-    texto:"Nunca es tarde para hacer lo que deberías haber hecho.",
-    fecha:"Publicado inicialmente"
-  },
-
-  {
-    texto:"Las ideas más grandes nacen en momentos inesperados.",
-    fecha:"Publicado inicialmente"
+    texto:"El ajedrez no solo mueve piezas, también mueve la mente.",
+    fecha:"Publicado por By Andy"
   }
 
 ];
@@ -317,6 +307,18 @@ function mostrarFrase(fraseObj){
 }
 
 function nuevaFrase(){
+
+  if(frases.length === 0){
+
+    document.getElementById("frase").innerText =
+    "Todavía no hay frases publicadas.";
+
+    document.getElementById("fechaPublicacion").innerText =
+    "Publica tu primera frase desde Administración.";
+
+    return;
+
+  }
 
   let random = Math.floor(Math.random() * frases.length);
 
@@ -382,9 +384,9 @@ function publicarFrase(){
 
   frases.unshift(nueva);
 
-  mostrarFrase(nueva);
+  localStorage.setItem("frasesByAndy", JSON.stringify(frases));
 
-  localStorage.setItem("ultimaFrase", JSON.stringify(nueva));
+  mostrarFrase(nueva);
 
   document.getElementById("nuevaFraseTexto").value = "";
 
@@ -394,11 +396,17 @@ function publicarFrase(){
 
 window.onload = function(){
 
-  const guardada = localStorage.getItem("ultimaFrase");
+  const guardadas = localStorage.getItem("frasesByAndy");
 
-  if(guardada){
+  if(guardadas){
 
-    mostrarFrase(JSON.parse(guardada));
+    frases = JSON.parse(guardadas);
+
+  }
+
+  if(frases.length > 0){
+
+    mostrarFrase(frases[0]);
 
   }
 
