@@ -1,4 +1,4 @@
-```html
+```html id="m7kq2x"
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,6 +7,7 @@
   <title>Frases de La Vida</title>
 
   <style>
+
     *{
       margin:0;
       padding:0;
@@ -30,6 +31,8 @@
       align-items:center;
       background:white;
       box-shadow:0 2px 10px rgba(0,0,0,0.08);
+      flex-wrap:wrap;
+      gap:10px;
     }
 
     .email{
@@ -37,9 +40,15 @@
       color:#444;
     }
 
+    .socials{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
     .socials a{
       text-decoration:none;
-      margin-left:15px;
       color:#222;
       font-weight:bold;
       transition:0.3s;
@@ -47,6 +56,16 @@
 
     .socials a:hover{
       color:#666;
+    }
+
+    .admin-btn{
+      padding:10px 18px;
+      border:none;
+      border-radius:10px;
+      background:#111827;
+      color:white;
+      cursor:pointer;
+      font-weight:bold;
     }
 
     main{
@@ -75,8 +94,14 @@
     #frase{
       font-size:26px;
       line-height:1.6;
-      margin-bottom:30px;
+      margin-bottom:25px;
       color:#333;
+    }
+
+    .fecha{
+      color:#666;
+      margin-bottom:20px;
+      font-size:15px;
     }
 
     .firma{
@@ -110,11 +135,54 @@
       box-shadow:0 -2px 10px rgba(0,0,0,0.05);
     }
 
+    .panel-admin{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.7);
+      display:none;
+      justify-content:center;
+      align-items:center;
+      z-index:9999;
+      padding:20px;
+    }
+
+    .admin-box{
+      background:white;
+      width:100%;
+      max-width:500px;
+      padding:30px;
+      border-radius:20px;
+      text-align:center;
+    }
+
+    .admin-box h2{
+      margin-bottom:20px;
+    }
+
+    .admin-box input,
+    .admin-box textarea{
+      width:100%;
+      padding:14px;
+      margin-bottom:15px;
+      border-radius:12px;
+      border:1px solid #ddd;
+      font-size:16px;
+    }
+
+    .admin-box textarea{
+      resize:none;
+      min-height:140px;
+    }
+
+    .admin-box button{
+      width:100%;
+      margin-top:10px;
+    }
+
     @media(max-width:768px){
 
       header{
         flex-direction:column;
-        gap:10px;
       }
 
       h1{
@@ -131,71 +199,212 @@
 </head>
 <body>
 
-  <header>
+<header>
 
-    <div class="email">
-      abaezjorge@gmail.com
+  <div class="email">
+    abaezjorge@gmail.com
+  </div>
+
+  <div class="socials">
+
+    <a href="#">Instagram</a>
+    <a href="#">Facebook</a>
+    <a href="#">TikTok</a>
+
+    <button class="admin-btn" onclick="abrirAdmin()">
+      Administración
+    </button>
+
+  </div>
+
+</header>
+
+<main>
+
+  <div class="frase-box">
+
+    <h1>Frases de La Vida</h1>
+
+    <div id="frase">
+      “La luz cambia la percepción que tenemos de la vida.”
     </div>
 
-    <div class="socials">
-      <a href="#">Instagram</a>
-      <a href="#">Facebook</a>
-      <a href="#">TikTok</a>
+    <div class="fecha" id="fechaPublicacion">
+      Publicado: Hoy
     </div>
 
-  </header>
+    <div class="firma">
+      — By Andy
+    </div>
 
-  <main>
+    <button onclick="nuevaFrase()">
+      Nueva Frase
+    </button>
 
-    <div class="frase-box">
+  </div>
 
-      <h1>Frases de La Vida</h1>
+</main>
 
-      <div id="frase">
-        “La luz cambia la percepción que tenemos de la vida.”
-      </div>
+<footer>
+  © 2026 Reservado por derechos de autor • By Andy
+</footer>
 
-      <div class="firma">
-        — By Andy
-      </div>
+<!-- PANEL ADMIN -->
 
-      <button onclick="nuevaFrase()">
-        Nueva Frase
+<div class="panel-admin" id="panelAdmin">
+
+  <div class="admin-box">
+
+    <h2>🔐 Panel Administración</h2>
+
+    <div id="loginArea">
+
+      <input type="password" id="claveAdmin" placeholder="Ingresa la clave">
+
+      <button onclick="verificarClave()">
+        Entrar
       </button>
 
     </div>
 
-  </main>
+    <div id="editorArea" style="display:none;">
 
-  <footer>
-    © 2026 Reservado por derechos de autor • By Andy
-  </footer>
+      <textarea id="nuevaFraseTexto" placeholder="Escribe tu nueva frase..."></textarea>
 
-  <script>
+      <button onclick="publicarFrase()">
+        Publicar Frase
+      </button>
 
-    const frases = [
+    </div>
 
-      "La luz cambia la percepción que tenemos de la vida.",
+    <button onclick="cerrarAdmin()">
+      Cerrar
+    </button>
 
-      "Nunca es tarde para hacer lo que deberías haber hecho.",
+  </div>
 
-      "Las ideas más grandes nacen en momentos inesperados.",
+</div>
 
-      "La disciplina vence al talento cuando el talento no trabaja.",
+<script>
 
-      "Tu mente puede convertirse en tu mayor poder."
+const frases = [
 
-    ];
+  {
+    texto:"La luz cambia la percepción que tenemos de la vida.",
+    fecha:"Publicado inicialmente"
+  },
 
-    function nuevaFrase(){
+  {
+    texto:"Nunca es tarde para hacer lo que deberías haber hecho.",
+    fecha:"Publicado inicialmente"
+  },
 
-      let random = Math.floor(Math.random() * frases.length);
+  {
+    texto:"Las ideas más grandes nacen en momentos inesperados.",
+    fecha:"Publicado inicialmente"
+  }
 
-      document.getElementById("frase").innerText = "“" + frases[random] + "”";
+];
 
-    }
+function mostrarFrase(fraseObj){
 
-  </script>
+  document.getElementById("frase").innerText =
+  "“" + fraseObj.texto + "”";
+
+  document.getElementById("fechaPublicacion").innerText =
+  fraseObj.fecha;
+
+}
+
+function nuevaFrase(){
+
+  let random = Math.floor(Math.random() * frases.length);
+
+  mostrarFrase(frases[random]);
+
+}
+
+function abrirAdmin(){
+
+  document.getElementById("panelAdmin").style.display = "flex";
+
+}
+
+function cerrarAdmin(){
+
+  document.getElementById("panelAdmin").style.display = "none";
+
+}
+
+function verificarClave(){
+
+  const clave = document.getElementById("claveAdmin").value;
+
+  if(clave === "3321"){
+
+    document.getElementById("loginArea").style.display = "none";
+
+    document.getElementById("editorArea").style.display = "block";
+
+  }else{
+
+    alert("❌ Clave incorrecta");
+
+  }
+
+}
+
+function publicarFrase(){
+
+  const texto = document.getElementById("nuevaFraseTexto").value;
+
+  if(texto.trim() === ""){
+
+    alert("Escribe una frase.");
+
+    return;
+
+  }
+
+  const ahora = new Date();
+
+  const fecha = ahora.toLocaleDateString();
+
+  const hora = ahora.toLocaleTimeString();
+
+  const nueva = {
+
+    texto:texto,
+
+    fecha:"Publicado el " + fecha + " a las " + hora
+
+  };
+
+  frases.unshift(nueva);
+
+  mostrarFrase(nueva);
+
+  localStorage.setItem("ultimaFrase", JSON.stringify(nueva));
+
+  document.getElementById("nuevaFraseTexto").value = "";
+
+  alert("✅ Frase publicada correctamente");
+
+}
+
+window.onload = function(){
+
+  const guardada = localStorage.getItem("ultimaFrase");
+
+  if(guardada){
+
+    mostrarFrase(JSON.parse(guardada));
+
+  }
+
+}
+
+</script>
 
 </body>
 </html>
