@@ -1,10 +1,10 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Frases de La Vida</title>
+  <link rel="icon" href="data:,">
 
   <style>
     *{
@@ -192,10 +192,6 @@
       overflow-y:auto;
     }
 
-    .admin-box h2{
-      margin-bottom:20px;
-    }
-
     .admin-box input,
     .admin-box textarea{
       width:100%;
@@ -285,22 +281,15 @@
 <body>
 
 <header>
-  <div class="email">
-    abaezjorge@gmail.com
-  </div>
+  <div class="email">abaezjorge@gmail.com</div>
 
   <div class="socials">
     <a href="#">Instagram</a>
     <a href="#">Facebook</a>
     <a href="#">TikTok</a>
 
-    <button class="theme-btn" onclick="cambiarModo()" id="modoBtn">
-      🌙 Oscuro
-    </button>
-
-    <button class="admin-btn" onclick="abrirAdmin()">
-      Administración
-    </button>
+    <button class="theme-btn" onclick="cambiarModo()" id="modoBtn">🌙 Oscuro</button>
+    <button class="admin-btn" onclick="abrirAdmin()">Administración</button>
   </div>
 </header>
 
@@ -308,23 +297,13 @@
   <div class="frase-box">
     <h1>Frases de La Vida</h1>
 
-    <div id="frase">
-      “A veces, los mejores compañeros de chess estuvieron cerca de nosotros… y nunca lo vimos.
+    <div id="frase"></div>
 
-hasta que la partida inició ~”
-    </div>
+    <div class="fecha" id="fechaPublicacion"></div>
 
-    <div class="fecha" id="fechaPublicacion">
-      Publicado por By Andy
-    </div>
+    <div class="firma">— By Andy</div>
 
-    <div class="firma">
-      — By Andy
-    </div>
-
-    <button onclick="nuevaFrase()">
-      Nueva Frase
-    </button>
+    <button onclick="nuevaFrase()">Nueva Frase</button>
   </div>
 </main>
 
@@ -338,18 +317,13 @@ hasta que la partida inició ~”
 
     <div id="loginArea">
       <input type="password" id="claveAdmin" placeholder="Ingresa la clave">
-
-      <button onclick="verificarClave()">
-        Entrar
-      </button>
+      <button onclick="verificarClave()">Entrar</button>
     </div>
 
     <div id="editorArea" style="display:none;">
       <textarea id="nuevaFraseTexto" placeholder="Escribe tu nueva frase..."></textarea>
 
-      <button onclick="publicarFrase()" id="btnPublicar">
-        Publicar Frase
-      </button>
+      <button onclick="publicarFrase()" id="btnPublicar">Publicar Frase</button>
 
       <button onclick="cancelarEdicion()" id="btnCancelar" style="display:none;background:#6b7280;">
         Cancelar Edición
@@ -361,39 +335,70 @@ hasta que la partida inició ~”
       </div>
     </div>
 
-    <button onclick="cerrarAdmin()">
-      Cerrar
-    </button>
+    <button onclick="cerrarAdmin()">Cerrar</button>
   </div>
 </div>
 
 <script>
-let frases = JSON.parse(localStorage.getItem("frasesByAndy")) || [
+const frasesIniciales = [
   {
     texto:"A veces, los mejores compañeros de chess estuvieron cerca de nosotros… y nunca lo vimos.\n\nhasta que la partida inició ~",
     fecha:"Publicado por By Andy"
   }
 ];
 
+let frases = cargarFrases();
 let indiceEditando = null;
+let ultimoIndice = 0;
+
+function cargarFrases(){
+  try{
+    const data = JSON.parse(localStorage.getItem("frasesByAndy"));
+
+    if(Array.isArray(data) && data.length > 0){
+      return data.filter(item => item && typeof item.texto === "string");
+    }
+
+    return frasesIniciales;
+  }catch(error){
+    localStorage.removeItem("frasesByAndy");
+    return frasesIniciales;
+  }
+}
 
 function guardarFrases(){
   localStorage.setItem("frasesByAndy", JSON.stringify(frases));
 }
 
 function mostrarFrase(fraseObj){
-  document.getElementById("frase").innerText = "“" + fraseObj.texto + "”";
-  document.getElementById("fechaPublicacion").innerText = fraseObj.fecha;
-}
-
-function nuevaFrase(){
-  if(frases.length === 0){
+  if(!fraseObj || typeof fraseObj.texto !== "string"){
     document.getElementById("frase").innerText = "Todavía no hay frases publicadas.";
     document.getElementById("fechaPublicacion").innerText = "Publica tu primera frase desde Administración.";
     return;
   }
 
-  let random = Math.floor(Math.random() * frases.length);
+  document.getElementById("frase").innerText = "“" + fraseObj.texto + "”";
+  document.getElementById("fechaPublicacion").innerText = fraseObj.fecha || "Publicado por By Andy";
+}
+
+function nuevaFrase(){
+  if(frases.length === 0){
+    mostrarFrase(null);
+    return;
+  }
+
+  if(frases.length === 1){
+    mostrarFrase(frases[0]);
+    return;
+  }
+
+  let random;
+
+  do{
+    random = Math.floor(Math.random() * frases.length);
+  }while(random === ultimoIndice);
+
+  ultimoIndice = random;
   mostrarFrase(frases[random]);
 }
 
@@ -419,16 +424,16 @@ function verificarClave(){
 }
 
 function publicarFrase(){
-  const texto = document.getElementById("nuevaFraseTexto").value;
+  const texto = document.getElementById("nuevaFraseTexto").value.trim();
 
-  if(texto.trim() === ""){
+  if(texto === ""){
     alert("Escribe una frase.");
     return;
   }
 
   const ahora = new Date();
-  const fecha = ahora.toLocaleDateString();
-  const hora = ahora.toLocaleTimeString();
+  const fecha = ahora.toLocaleDateString("es-DO");
+  const hora = ahora.toLocaleTimeString("es-DO");
 
   if(indiceEditando !== null){
     frases[indiceEditando].texto = texto;
@@ -449,6 +454,7 @@ function publicarFrase(){
 
     frases.unshift(nueva);
     mostrarFrase(nueva);
+    ultimoIndice = 0;
 
     alert("✅ Frase publicada correctamente");
   }
@@ -464,7 +470,6 @@ function editarFrase(index){
   document.getElementById("nuevaFraseTexto").value = frases[index].texto;
   document.getElementById("btnPublicar").innerText = "Guardar Cambios";
   document.getElementById("btnCancelar").style.display = "block";
-
   document.getElementById("nuevaFraseTexto").focus();
 }
 
@@ -490,8 +495,7 @@ function eliminarFrase(index){
   if(frases.length > 0){
     mostrarFrase(frases[0]);
   }else{
-    document.getElementById("frase").innerText = "Todavía no hay frases publicadas.";
-    document.getElementById("fechaPublicacion").innerText = "Publica tu primera frase desde Administración.";
+    mostrarFrase(null);
   }
 
   alert("🗑️ Frase eliminada correctamente");
@@ -515,20 +519,35 @@ function renderizarListaFrases(){
     const item = document.createElement("div");
     item.className = "frase-item";
 
-    item.innerHTML = `
-      <p>“${frase.texto}”</p>
-      <small>${frase.fecha}</small>
+    const texto = document.createElement("p");
+    texto.innerText = "“" + frase.texto + "”";
 
-      <div class="acciones-frase">
-        <button class="editar" onclick="editarFrase(${index})">
-          Editar
-        </button>
+    const fecha = document.createElement("small");
+    fecha.innerText = frase.fecha || "Publicado por By Andy";
 
-        <button class="eliminar" onclick="eliminarFrase(${index})">
-          Eliminar
-        </button>
-      </div>
-    `;
+    const acciones = document.createElement("div");
+    acciones.className = "acciones-frase";
+
+    const btnEditar = document.createElement("button");
+    btnEditar.className = "editar";
+    btnEditar.innerText = "Editar";
+    btnEditar.onclick = function(){
+      editarFrase(index);
+    };
+
+    const btnEliminar = document.createElement("button");
+    btnEliminar.className = "eliminar";
+    btnEliminar.innerText = "Eliminar";
+    btnEliminar.onclick = function(){
+      eliminarFrase(index);
+    };
+
+    acciones.appendChild(btnEditar);
+    acciones.appendChild(btnEliminar);
+
+    item.appendChild(texto);
+    item.appendChild(fecha);
+    item.appendChild(acciones);
 
     contenedor.appendChild(item);
   });
@@ -557,14 +576,10 @@ window.onload = function(){
   if(frases.length > 0){
     mostrarFrase(frases[0]);
   }else{
-    document.getElementById("frase").innerText = "Todavía no hay frases publicadas.";
-    document.getElementById("fechaPublicacion").innerText = "Publica tu primera frase desde Administración.";
+    mostrarFrase(null);
   }
-
-  guardarFrases();
-}
+};
 </script>
 
 </body>
 </html>
-```
