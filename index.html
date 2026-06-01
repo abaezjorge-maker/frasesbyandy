@@ -70,6 +70,7 @@
       align-items:center;
       gap:12px;
       flex-wrap:wrap;
+      justify-content:center;
     }
 
     .socials a{
@@ -271,6 +272,10 @@
         font-size:22px;
       }
 
+      .frase-box{
+        padding:45px 22px;
+      }
+
       .acciones-frase{
         flex-direction:column;
       }
@@ -329,6 +334,10 @@
         Cancelar Edición
       </button>
 
+      <button onclick="restaurarFrasesIniciales()" style="background:#0f766e;">
+        Restaurar Frases Iniciales
+      </button>
+
       <div class="lista-frases">
         <h3>📚 Frases Publicadas</h3>
         <div id="listaFrases"></div>
@@ -344,6 +353,42 @@ const frasesIniciales = [
   {
     texto:"A veces, los mejores compañeros de chess estuvieron cerca de nosotros… y nunca lo vimos.\n\nhasta que la partida inició ~",
     fecha:"Publicado por By Andy"
+  },
+  {
+    texto:"Yo tampoco creería.",
+    fecha:"Publicado por By Andy"
+  },
+  {
+    texto:"El problema es que funciona.",
+    fecha:"Publicado por By Andy"
+  },
+  {
+    texto:"Recuerda que antes de un proyecto, el NO ya lo tienes.\n\nEl que no tienes todavía es el SÍ.",
+    fecha:"Publicado por By Andy"
+  },
+  {
+    texto:"La luz cambia la percepción que tenemos de la vida y de los desafíos que nos presenta.",
+    fecha:"Publicado por By Andy"
+  },
+  {
+    texto:"Nunca es tarde para hacer lo que deberías haber sido.",
+    fecha:"Publicado por By Andy"
+  },
+  {
+    texto:"A veces el silencio no es vacío.\n\nEs una estrategia de la mente para volver más fuerte.",
+    fecha:"Publicado por By Andy"
+  },
+  {
+    texto:"No todo el mundo va a entender tu proceso.\n\nPero eso no significa que tu proceso esté mal.",
+    fecha:"Publicado por By Andy"
+  },
+  {
+    texto:"Sigue, actúa e impleméntalo.\n\nLa idea que no ejecutas se queda viviendo solo en tu mente.",
+    fecha:"Publicado por By Andy"
+  },
+  {
+    texto:"Cuando la partida inició, entendí que algunas piezas siempre estuvieron cerca.",
+    fecha:"Publicado por By Andy"
   }
 ];
 
@@ -356,14 +401,24 @@ function cargarFrases(){
     const data = JSON.parse(localStorage.getItem("frasesByAndy"));
 
     if(Array.isArray(data) && data.length > 0){
-      return data.filter(item => item && typeof item.texto === "string");
+      const frasesValidas = data.filter(item => item && typeof item.texto === "string");
+
+      if(frasesValidas.length > 0){
+        return frasesValidas;
+      }
     }
 
-    return frasesIniciales;
+    guardarFrasesIniciales();
+    return frasesIniciales.slice();
   }catch(error){
     localStorage.removeItem("frasesByAndy");
-    return frasesIniciales;
+    guardarFrasesIniciales();
+    return frasesIniciales.slice();
   }
+}
+
+function guardarFrasesIniciales(){
+  localStorage.setItem("frasesByAndy", JSON.stringify(frasesIniciales));
 }
 
 function guardarFrases(){
@@ -387,19 +442,13 @@ function nuevaFrase(){
     return;
   }
 
-  if(frases.length === 1){
-    mostrarFrase(frases[0]);
-    return;
+  ultimoIndice++;
+
+  if(ultimoIndice >= frases.length){
+    ultimoIndice = 0;
   }
 
-  let random;
-
-  do{
-    random = Math.floor(Math.random() * frases.length);
-  }while(random === ultimoIndice);
-
-  ultimoIndice = random;
-  mostrarFrase(frases[random]);
+  mostrarFrase(frases[ultimoIndice]);
 }
 
 function abrirAdmin(){
@@ -493,12 +542,35 @@ function eliminarFrase(index){
   renderizarListaFrases();
 
   if(frases.length > 0){
+    ultimoIndice = 0;
     mostrarFrase(frases[0]);
   }else{
     mostrarFrase(null);
   }
 
   alert("🗑️ Frase eliminada correctamente");
+}
+
+function restaurarFrasesIniciales(){
+  const confirmar = confirm("Esto restaurará las frases iniciales. Las frases publicadas desde este navegador se reemplazarán. ¿Deseas continuar?");
+
+  if(!confirmar){
+    return;
+  }
+
+  frases = frasesIniciales.slice();
+  ultimoIndice = 0;
+  indiceEditando = null;
+
+  guardarFrases();
+  mostrarFrase(frases[0]);
+  renderizarListaFrases();
+
+  document.getElementById("nuevaFraseTexto").value = "";
+  document.getElementById("btnPublicar").innerText = "Publicar Frase";
+  document.getElementById("btnCancelar").style.display = "none";
+
+  alert("✅ Frases iniciales restauradas");
 }
 
 function renderizarListaFrases(){
