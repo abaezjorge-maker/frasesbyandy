@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Frases de La Vida</title>
+  <title>Poesías by Andy</title>
   <link rel="icon" href="data:,">
 
   <style>
@@ -14,450 +14,508 @@
     }
 
     :root{
-      --bg-main: linear-gradient(135deg, #dbeafe, #eff6ff, #ffffff);
-      --card-bg: white;
-      --text-main: #222;
-      --text-soft: #666;
-      --header-bg: rgba(255,255,255,0.9);
-      --shadow: rgba(0,0,0,0.12);
-      --button-bg: #222;
-      --button-text: white;
+      --bg: #f3f0ea;
+      --bg-soft: rgba(255,255,255,0.74);
+      --card: rgba(255,255,255,0.88);
+      --text: #1f2933;
+      --muted: #6b7280;
+      --border: rgba(31,41,55,0.12);
+      --shadow: rgba(17,24,39,0.15);
+      --accent: #111827;
+      --accent-text: #ffffff;
+      --danger: #dc2626;
+      --edit: #2563eb;
     }
 
     body.dark{
-      --bg-main:
-        radial-gradient(circle at top, rgba(59,130,246,0.28), transparent 35%),
-        linear-gradient(135deg, #020617, #0f172a, #1e3a8a);
-      --card-bg: rgba(255,255,255,0.08);
-      --text-main: #f8fafc;
-      --text-soft: #cbd5e1;
-      --header-bg: rgba(2,6,23,0.85);
-      --shadow: rgba(0,0,0,0.35);
-      --button-bg: #67e8f9;
-      --button-text: #020617;
+      --bg: #050816;
+      --bg-soft: rgba(15,23,42,0.74);
+      --card: rgba(15,23,42,0.86);
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --border: rgba(255,255,255,0.12);
+      --shadow: rgba(0,0,0,0.45);
+      --accent: #f8fafc;
+      --accent-text: #020617;
+      --danger: #ef4444;
+      --edit: #60a5fa;
     }
 
     body{
-      background: var(--bg-main);
-      font-family: Arial, sans-serif;
-      color: var(--text-main);
       min-height:100vh;
-      display:flex;
-      flex-direction:column;
-      transition:0.4s;
+      font-family: Georgia, 'Times New Roman', serif;
+      background:
+        linear-gradient(rgba(243,240,234,0.78), rgba(243,240,234,0.94)),
+        url("https://images.unsplash.com/photo-1455390582262-044cdead277a/?auto=format&fit=crop&w=1800&q=80");
+      background-size:cover;
+      background-position:center;
+      background-attachment:fixed;
+      color:var(--text);
+      transition:0.35s ease;
+    }
+
+    body.dark{
+      background:
+        radial-gradient(circle at top left, rgba(99,102,241,0.22), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(14,165,233,0.17), transparent 28%),
+        linear-gradient(135deg, #020617, #111827, #1e1b4b);
     }
 
     header{
-      width:100%;
-      padding:20px;
+      position:sticky;
+      top:0;
+      z-index:50;
       display:flex;
       justify-content:space-between;
       align-items:center;
-      background:var(--header-bg);
-      box-shadow:0 2px 10px var(--shadow);
-      flex-wrap:wrap;
-      gap:10px;
-      backdrop-filter: blur(14px);
+      gap:15px;
+      padding:18px 7%;
+      background:var(--bg-soft);
+      border-bottom:1px solid var(--border);
+      backdrop-filter: blur(16px);
+      box-shadow:0 8px 28px var(--shadow);
     }
 
-    .email{
+    .brand h1{
+      font-size:30px;
+      letter-spacing:0.5px;
+      line-height:1.1;
+    }
+
+    .brand p{
+      color:var(--muted);
       font-size:14px;
-      color:var(--text-soft);
+      margin-top:5px;
+      font-family: Arial, sans-serif;
     }
 
-    .socials{
+    .header-actions{
       display:flex;
       align-items:center;
-      gap:12px;
+      gap:10px;
       flex-wrap:wrap;
-      justify-content:center;
-    }
-
-    .socials a{
-      text-decoration:none;
-      color:var(--text-main);
-      font-weight:bold;
-      transition:0.3s;
-    }
-
-    .socials a:hover{
-      opacity:0.7;
-    }
-
-    .admin-btn,
-    .theme-btn{
-      padding:10px 18px;
-      border:none;
-      border-radius:10px;
-      background:var(--button-bg);
-      color:var(--button-text);
-      cursor:pointer;
-      font-weight:bold;
-    }
-
-    main{
-      flex:1;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      padding:30px;
-    }
-
-    .frase-box{
-      background:var(--card-bg);
-      padding:50px 30px;
-      border-radius:24px;
-      max-width:760px;
-      width:100%;
-      box-shadow:0 12px 35px var(--shadow);
-      backdrop-filter: blur(18px);
-      border:1px solid rgba(255,255,255,0.18);
-    }
-
-    h1{
-      font-size:40px;
-      margin-bottom:30px;
-      color:var(--text-main);
-    }
-
-    #frase{
-      font-size:26px;
-      line-height:1.6;
-      margin-bottom:25px;
-      color:var(--text-main);
-      white-space:pre-line;
-    }
-
-    .fecha{
-      color:var(--text-soft);
-      margin-bottom:20px;
-      font-size:15px;
-    }
-
-    .firma{
-      font-size:20px;
-      font-style:italic;
-      color:var(--text-soft);
+      justify-content:flex-end;
     }
 
     button{
-      margin-top:30px;
-      padding:12px 25px;
       border:none;
-      border-radius:10px;
-      background:var(--button-bg);
-      color:var(--button-text);
-      cursor:pointer;
-      font-size:16px;
-      transition:0.3s;
+      background:var(--accent);
+      color:var(--accent-text);
+      padding:11px 17px;
+      border-radius:999px;
       font-weight:bold;
+      cursor:pointer;
+      transition:0.25s ease;
+      font-family: Arial, sans-serif;
+      box-shadow:0 8px 18px rgba(0,0,0,0.12);
     }
 
     button:hover{
       transform:translateY(-2px);
-      opacity:0.9;
+      opacity:0.92;
+    }
+
+    main{
+      width:min(980px, 92%);
+      margin:0 auto;
+      padding:34px 0 45px;
+    }
+
+    .composer{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:24px;
+      box-shadow:0 18px 45px var(--shadow);
+      padding:18px;
+      backdrop-filter: blur(18px);
+      margin-bottom:24px;
+    }
+
+    .composer-top{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:14px;
+      font-family: Arial, sans-serif;
+      color:var(--muted);
+      font-weight:bold;
+    }
+
+    .avatar{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:var(--accent);
+      color:var(--accent-text);
+      font-family: Arial, sans-serif;
+      font-weight:900;
+    }
+
+    .composer input,
+    .composer textarea,
+    .admin-card input,
+    .admin-card textarea{
+      width:100%;
+      border:1px solid var(--border);
+      outline:none;
+      border-radius:18px;
+      padding:14px 16px;
+      background:rgba(255,255,255,0.62);
+      color:#111827;
+      font-size:16px;
+      margin-bottom:12px;
+      font-family: Arial, sans-serif;
+    }
+
+    body.dark .composer input,
+    body.dark .composer textarea,
+    body.dark .admin-card input,
+    body.dark .admin-card textarea{
+      background:rgba(255,255,255,0.08);
+      color:#f8fafc;
+    }
+
+    .composer textarea{
+      min-height:130px;
+      resize:vertical;
+      line-height:1.55;
+    }
+
+    .composer-actions{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .hint{
+      color:var(--muted);
+      font-family: Arial, sans-serif;
+      font-size:13px;
+    }
+
+    .feed{
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+
+    .poem-card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:26px;
+      box-shadow:0 18px 45px var(--shadow);
+      padding:28px;
+      backdrop-filter: blur(18px);
+      animation: entrada 0.35s ease both;
+    }
+
+    @keyframes entrada{
+      from{opacity:0; transform:translateY(12px);}
+      to{opacity:1; transform:translateY(0);}
+    }
+
+    .poem-title{
+      font-size:23px;
+      margin-bottom:16px;
+      font-weight:bold;
+    }
+
+    .poem-text{
+      white-space:pre-line;
+      font-size:22px;
+      line-height:1.72;
+      color:var(--text);
+    }
+
+    .poem-date{
+      margin-top:18px;
+      padding-top:14px;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      font-family: Arial, sans-serif;
+      font-size:13px;
+    }
+
+    .post-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+
+    .secondary{
+      background:transparent;
+      color:var(--text);
+      border:1px solid var(--border);
+      box-shadow:none;
+    }
+
+    .edit-btn{ background:var(--edit); color:white; }
+    .delete-btn{ background:var(--danger); color:white; }
+
+    .admin-panel{
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      display:none;
+      justify-content:center;
+      align-items:center;
+      padding:20px;
+      background:rgba(0,0,0,0.72);
+      overflow-y:auto;
+    }
+
+    .admin-card{
+      width:min(720px, 100%);
+      max-height:92vh;
+      overflow-y:auto;
+      background:var(--card);
+      color:var(--text);
+      border-radius:24px;
+      padding:24px;
+      box-shadow:0 24px 60px rgba(0,0,0,0.4);
+      border:1px solid var(--border);
+      backdrop-filter: blur(18px);
+    }
+
+    .admin-card h2,
+    .admin-card h3{
+      margin-bottom:15px;
+    }
+
+    .admin-item{
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:15px;
+      margin-top:12px;
+      background:rgba(255,255,255,0.08);
+    }
+
+    .admin-item p{
+      white-space:pre-line;
+      line-height:1.45;
+      margin:8px 0;
     }
 
     footer{
       text-align:center;
-      padding:20px;
-      background:var(--header-bg);
-      font-size:14px;
-      color:var(--text-soft);
-      box-shadow:0 -2px 10px var(--shadow);
-      backdrop-filter: blur(14px);
+      padding:22px;
+      color:var(--muted);
+      font-family: Arial, sans-serif;
+      background:var(--bg-soft);
+      border-top:1px solid var(--border);
+      backdrop-filter: blur(16px);
     }
 
-    .panel-admin{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.75);
-      display:none;
-      justify-content:center;
-      align-items:center;
-      z-index:9999;
-      padding:20px;
-      overflow-y:auto;
-    }
-
-    .admin-box{
-      background:white;
-      color:#222;
-      width:100%;
-      max-width:620px;
-      padding:30px;
-      border-radius:20px;
-      text-align:center;
-      max-height:90vh;
-      overflow-y:auto;
-    }
-
-    .admin-box input,
-    .admin-box textarea{
-      width:100%;
-      padding:14px;
-      margin-bottom:15px;
-      border-radius:12px;
-      border:1px solid #ddd;
-      font-size:16px;
-    }
-
-    .admin-box textarea{
-      resize:none;
-      min-height:140px;
-    }
-
-    .admin-box button{
-      width:100%;
-      margin-top:10px;
-      background:#222;
-      color:white;
-    }
-
-    .lista-frases{
-      margin-top:25px;
-      text-align:left;
-    }
-
-    .frase-item{
-      background:#f3f4f6;
-      border:1px solid #ddd;
-      border-radius:14px;
-      padding:15px;
-      margin-bottom:12px;
-    }
-
-    .frase-item p{
-      white-space:pre-line;
-      margin-bottom:8px;
-      color:#222;
-      line-height:1.5;
-    }
-
-    .frase-item small{
-      color:#666;
-    }
-
-    .acciones-frase{
-      display:flex;
-      gap:10px;
-      margin-top:10px;
-    }
-
-    .acciones-frase button{
-      margin-top:0;
-      padding:10px;
-      font-size:14px;
-    }
-
-    .editar{
-      background:#2563eb !important;
-    }
-
-    .eliminar{
-      background:#dc2626 !important;
-    }
-
-    @media(max-width:768px){
+    @media(max-width:720px){
       header{
+        position:relative;
         flex-direction:column;
+        align-items:flex-start;
       }
 
-      h1{
-        font-size:30px;
+      .header-actions{
+        width:100%;
+        justify-content:flex-start;
       }
 
-      #frase{
-        font-size:22px;
+      .brand h1{
+        font-size:26px;
       }
 
-      .frase-box{
-        padding:45px 22px;
+      .poem-text{
+        font-size:19px;
       }
 
-      .acciones-frase{
-        flex-direction:column;
+      .poem-card,
+      .composer{
+        border-radius:20px;
+        padding:20px;
+      }
+
+      button{
+        width:auto;
       }
     }
   </style>
 </head>
 
 <body>
-
 <header>
-  <div class="email">abaezjorge@gmail.com</div>
+  <div class="brand">
+    <h1>Poesías by Andy</h1>
+    <p>Fragmentos, pensamientos y versos cortos.</p>
+  </div>
 
-  <div class="socials">
-    <a href="#">Instagram</a>
-    <a href="#">Facebook</a>
-    <a href="#">TikTok</a>
-
-    <button class="theme-btn" onclick="cambiarModo()" id="modoBtn">🌙 Oscuro</button>
-    <button class="admin-btn" onclick="abrirAdmin()">Administración</button>
+  <div class="header-actions">
+    <button class="secondary" onclick="cambiarModo()" id="modoBtn">🌙 Oscuro</button>
+    <button onclick="abrirAdmin()">⚙️ Administrar</button>
   </div>
 </header>
 
 <main>
-  <div class="frase-box">
-    <h1>Frases de La Vida</h1>
+  <section class="composer">
+    <div class="composer-top">
+      <div class="avatar">A</div>
+      <span>Publicar nueva poesía</span>
+    </div>
 
-    <div id="frase"></div>
+    <input id="tituloNuevo" type="text" placeholder="Título opcional">
+    <textarea id="textoNuevo" placeholder="¿Qué poesía quieres publicar hoy?"></textarea>
 
-    <div class="fecha" id="fechaPublicacion"></div>
+    <div class="composer-actions">
+      <span class="hint">Se guarda en este navegador usando memoria local.</span>
+      <button onclick="publicarPoesia()">Publicar</button>
+    </div>
+  </section>
 
-    <div class="firma">— By Andy</div>
-
-    <button onclick="nuevaFrase()">Nueva Frase</button>
-  </div>
+  <section class="feed" id="feedPoesias"></section>
 </main>
 
 <footer>
-  © 2026 Reservado por derechos de autor • By Andy
+  © 2026 • Poesías by Andy
 </footer>
 
-<div class="panel-admin" id="panelAdmin">
-  <div class="admin-box">
-    <h2>🔐 Panel Administración</h2>
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-card">
+    <h2>⚙️ Administración</h2>
 
     <div id="loginArea">
-      <input type="password" id="claveAdmin" placeholder="Ingresa la clave">
+      <input type="password" id="claveAdmin" placeholder="Clave de administración">
       <button onclick="verificarClave()">Entrar</button>
+      <button class="secondary" onclick="cerrarAdmin()">Cerrar</button>
     </div>
 
-    <div id="editorArea" style="display:none;">
-      <textarea id="nuevaFraseTexto" placeholder="Escribe tu nueva frase..."></textarea>
+    <div id="adminArea" style="display:none;">
+      <input id="tituloEditar" type="text" placeholder="Título opcional">
+      <textarea id="textoEditar" placeholder="Texto de la poesía"></textarea>
 
-      <button onclick="publicarFrase()" id="btnPublicar">Publicar Frase</button>
+      <button onclick="guardarEdicion()" id="btnGuardar" style="display:none;">Guardar cambios</button>
+      <button class="secondary" onclick="cancelarEdicion()" id="btnCancelar" style="display:none;">Cancelar edición</button>
 
-      <button onclick="cancelarEdicion()" id="btnCancelar" style="display:none;background:#6b7280;">
-        Cancelar Edición
-      </button>
+      <h3 style="margin-top:22px;">📚 Poesías publicadas</h3>
+      <div id="listaAdmin"></div>
 
-      <button onclick="restaurarFrasesIniciales()" style="background:#0f766e;">
-        Restaurar Frases Iniciales
-      </button>
-
-      <div class="lista-frases">
-        <h3>📚 Frases Publicadas</h3>
-        <div id="listaFrases"></div>
-      </div>
+      <button class="secondary" onclick="cerrarAdmin()" style="margin-top:18px;">Cerrar</button>
     </div>
-
-    <button onclick="cerrarAdmin()">Cerrar</button>
   </div>
 </div>
 
 <script>
-const frasesIniciales = [
+const poesiasIniciales = [
   {
-    texto:"A veces, los mejores compañeros de chess estuvieron cerca de nosotros… y nunca lo vimos.\n\nhasta que la partida inició ~",
-    fecha:"Publicado por By Andy"
-  },
-  {
-    texto:"Yo tampoco creería.",
-    fecha:"Publicado por By Andy"
-  },
-  {
-    texto:"El problema es que funciona.",
-    fecha:"Publicado por By Andy"
-  },
-  {
-    texto:"Recuerda que antes de un proyecto, el NO ya lo tienes.\n\nEl que no tienes todavía es el SÍ.",
-    fecha:"Publicado por By Andy"
-  },
-  {
-    texto:"La luz cambia la percepción que tenemos de la vida y de los desafíos que nos presenta.",
-    fecha:"Publicado por By Andy"
-  },
-  {
-    texto:"Nunca es tarde para hacer lo que deberías haber sido.",
-    fecha:"Publicado por By Andy"
-  },
-  {
-    texto:"A veces el silencio no es vacío.\n\nEs una estrategia de la mente para volver más fuerte.",
-    fecha:"Publicado por By Andy"
-  },
-  {
-    texto:"No todo el mundo va a entender tu proceso.\n\nPero eso no significa que tu proceso esté mal.",
-    fecha:"Publicado por By Andy"
-  },
-  {
-    texto:"Sigue, actúa e impleméntalo.\n\nLa idea que no ejecutas se queda viviendo solo en tu mente.",
-    fecha:"Publicado por By Andy"
-  },
-  {
-    texto:"Cuando la partida inició, entendí que algunas piezas siempre estuvieron cerca.",
-    fecha:"Publicado por By Andy"
+    titulo:"El milagro del tiempo",
+    texto:"Caminé por los senderos del pasado y vi que la muchedumbre anhelaba un solo milagro para despertar el tiempo.\n\nAllí vi aquel único milagro: yo, en el tiempo pasado, siendo el milagro que ellos esperaban.",
+    fecha:"Publicado el 12/6/2026"
   }
 ];
 
-let frases = cargarFrases();
+let poesias = cargarPoesias();
 let indiceEditando = null;
-let ultimoIndice = 0;
 
-function cargarFrases(){
+function cargarPoesias(){
   try{
-    const data = JSON.parse(localStorage.getItem("frasesByAndy"));
-
-    if(Array.isArray(data) && data.length > 0){
-      const frasesValidas = data.filter(item => item && typeof item.texto === "string");
-
-      if(frasesValidas.length > 0){
-        return frasesValidas;
-      }
+    const guardadas = JSON.parse(localStorage.getItem("poesiasByAndy"));
+    if(Array.isArray(guardadas) && guardadas.length > 0){
+      return guardadas.filter(p => p && typeof p.texto === "string");
     }
-
-    guardarFrasesIniciales();
-    return frasesIniciales.slice();
+    return poesiasIniciales;
   }catch(error){
-    localStorage.removeItem("frasesByAndy");
-    guardarFrasesIniciales();
-    return frasesIniciales.slice();
+    localStorage.removeItem("poesiasByAndy");
+    return poesiasIniciales;
   }
 }
 
-function guardarFrasesIniciales(){
-  localStorage.setItem("frasesByAndy", JSON.stringify(frasesIniciales));
+function guardarPoesias(){
+  localStorage.setItem("poesiasByAndy", JSON.stringify(poesias));
 }
 
-function guardarFrases(){
-  localStorage.setItem("frasesByAndy", JSON.stringify(frases));
+function formatoFecha(prefix){
+  const ahora = new Date();
+  const fecha = ahora.toLocaleDateString("es-DO");
+  const hora = ahora.toLocaleTimeString("es-DO", {hour:"2-digit", minute:"2-digit"});
+  return prefix + " " + fecha + " a las " + hora;
 }
 
-function mostrarFrase(fraseObj){
-  if(!fraseObj || typeof fraseObj.texto !== "string"){
-    document.getElementById("frase").innerText = "Todavía no hay frases publicadas.";
-    document.getElementById("fechaPublicacion").innerText = "Publica tu primera frase desde Administración.";
+function escapar(texto){
+  const div = document.createElement("div");
+  div.innerText = texto || "";
+  return div.innerHTML;
+}
+
+function renderizarFeed(){
+  const feed = document.getElementById("feedPoesias");
+  feed.innerHTML = "";
+
+  if(poesias.length === 0){
+    feed.innerHTML = '<div class="poem-card"><div class="poem-text">Todavía no hay poesías publicadas.</div></div>';
     return;
   }
 
-  document.getElementById("frase").innerText = "“" + fraseObj.texto + "”";
-  document.getElementById("fechaPublicacion").innerText = fraseObj.fecha || "Publicado por By Andy";
+  poesias.forEach((poesia, index) => {
+    const card = document.createElement("article");
+    card.className = "poem-card";
+
+    const titulo = poesia.titulo && poesia.titulo.trim() !== "" 
+      ? '<div class="poem-title">' + escapar(poesia.titulo) + '</div>'
+      : "";
+
+    card.innerHTML = `
+      ${titulo}
+      <div class="poem-text">${escapar(poesia.texto)}</div>
+      <div class="poem-date">${escapar(poesia.fecha || "Publicado")}</div>
+      <div class="post-actions">
+        <button class="secondary" onclick="copiarPoesia(${index})">Copiar</button>
+      </div>
+    `;
+
+    feed.appendChild(card);
+  });
 }
 
-function nuevaFrase(){
-  if(frases.length === 0){
-    mostrarFrase(null);
+function publicarPoesia(){
+  const titulo = document.getElementById("tituloNuevo").value.trim();
+  const texto = document.getElementById("textoNuevo").value.trim();
+
+  if(texto === ""){
+    alert("Escribe una poesía antes de publicar.");
     return;
   }
 
-  ultimoIndice++;
+  poesias.unshift({
+    titulo:titulo,
+    texto:texto,
+    fecha:formatoFecha("Publicado el")
+  });
 
-  if(ultimoIndice >= frases.length){
-    ultimoIndice = 0;
-  }
+  guardarPoesias();
+  document.getElementById("tituloNuevo").value = "";
+  document.getElementById("textoNuevo").value = "";
+  renderizarFeed();
+  renderizarAdmin();
+}
 
-  mostrarFrase(frases[ultimoIndice]);
+function copiarPoesia(index){
+  const p = poesias[index];
+  const contenido = (p.titulo ? p.titulo + "\n\n" : "") + p.texto;
+  navigator.clipboard.writeText(contenido).then(() => {
+    alert("Poesía copiada.");
+  }).catch(() => {
+    alert("No se pudo copiar automáticamente.");
+  });
 }
 
 function abrirAdmin(){
-  document.getElementById("panelAdmin").style.display = "flex";
-  renderizarListaFrases();
+  document.getElementById("adminPanel").style.display = "flex";
+  renderizarAdmin();
 }
 
 function cerrarAdmin(){
-  document.getElementById("panelAdmin").style.display = "none";
+  document.getElementById("adminPanel").style.display = "none";
 }
 
 function verificarClave(){
@@ -465,193 +523,106 @@ function verificarClave(){
 
   if(clave === "3321"){
     document.getElementById("loginArea").style.display = "none";
-    document.getElementById("editorArea").style.display = "block";
-    renderizarListaFrases();
+    document.getElementById("adminArea").style.display = "block";
+    renderizarAdmin();
   }else{
-    alert("❌ Clave incorrecta");
+    alert("Clave incorrecta.");
   }
 }
 
-function publicarFrase(){
-  const texto = document.getElementById("nuevaFraseTexto").value.trim();
+function renderizarAdmin(){
+  const lista = document.getElementById("listaAdmin");
+  if(!lista) return;
 
-  if(texto === ""){
-    alert("Escribe una frase.");
+  lista.innerHTML = "";
+
+  if(poesias.length === 0){
+    lista.innerHTML = "<p>No hay poesías publicadas.</p>";
     return;
   }
 
-  const ahora = new Date();
-  const fecha = ahora.toLocaleDateString("es-DO");
-  const hora = ahora.toLocaleTimeString("es-DO");
-
-  if(indiceEditando !== null){
-    frases[indiceEditando].texto = texto;
-    frases[indiceEditando].fecha = "Editado el " + fecha + " a las " + hora;
-
-    mostrarFrase(frases[indiceEditando]);
-
-    indiceEditando = null;
-    document.getElementById("btnPublicar").innerText = "Publicar Frase";
-    document.getElementById("btnCancelar").style.display = "none";
-
-    alert("✅ Frase editada correctamente");
-  }else{
-    const nueva = {
-      texto:texto,
-      fecha:"Publicado el " + fecha + " a las " + hora
-    };
-
-    frases.unshift(nueva);
-    mostrarFrase(nueva);
-    ultimoIndice = 0;
-
-    alert("✅ Frase publicada correctamente");
-  }
-
-  guardarFrases();
-  document.getElementById("nuevaFraseTexto").value = "";
-  renderizarListaFrases();
+  poesias.forEach((poesia, index) => {
+    const item = document.createElement("div");
+    item.className = "admin-item";
+    item.innerHTML = `
+      <strong>${escapar(poesia.titulo || "Sin título")}</strong>
+      <p>${escapar(poesia.texto)}</p>
+      <small>${escapar(poesia.fecha || "Publicado")}</small>
+      <div class="post-actions">
+        <button class="edit-btn" onclick="editarPoesia(${index})">Editar</button>
+        <button class="delete-btn" onclick="eliminarPoesia(${index})">Eliminar</button>
+      </div>
+    `;
+    lista.appendChild(item);
+  });
 }
 
-function editarFrase(index){
+function editarPoesia(index){
   indiceEditando = index;
+  document.getElementById("tituloEditar").value = poesias[index].titulo || "";
+  document.getElementById("textoEditar").value = poesias[index].texto || "";
+  document.getElementById("btnGuardar").style.display = "inline-block";
+  document.getElementById("btnCancelar").style.display = "inline-block";
+  document.getElementById("textoEditar").focus();
+}
 
-  document.getElementById("nuevaFraseTexto").value = frases[index].texto;
-  document.getElementById("btnPublicar").innerText = "Guardar Cambios";
-  document.getElementById("btnCancelar").style.display = "block";
-  document.getElementById("nuevaFraseTexto").focus();
+function guardarEdicion(){
+  if(indiceEditando === null) return;
+
+  const titulo = document.getElementById("tituloEditar").value.trim();
+  const texto = document.getElementById("textoEditar").value.trim();
+
+  if(texto === ""){
+    alert("El texto no puede quedar vacío.");
+    return;
+  }
+
+  poesias[indiceEditando].titulo = titulo;
+  poesias[indiceEditando].texto = texto;
+  poesias[indiceEditando].fecha = formatoFecha("Editado el");
+
+  guardarPoesias();
+  cancelarEdicion();
+  renderizarFeed();
+  renderizarAdmin();
 }
 
 function cancelarEdicion(){
   indiceEditando = null;
-
-  document.getElementById("nuevaFraseTexto").value = "";
-  document.getElementById("btnPublicar").innerText = "Publicar Frase";
+  document.getElementById("tituloEditar").value = "";
+  document.getElementById("textoEditar").value = "";
+  document.getElementById("btnGuardar").style.display = "none";
   document.getElementById("btnCancelar").style.display = "none";
 }
 
-function eliminarFrase(index){
-  const confirmar = confirm("¿Seguro que quieres eliminar esta frase?");
-
-  if(!confirmar){
-    return;
-  }
-
-  frases.splice(index, 1);
-  guardarFrases();
-  renderizarListaFrases();
-
-  if(frases.length > 0){
-    ultimoIndice = 0;
-    mostrarFrase(frases[0]);
-  }else{
-    mostrarFrase(null);
-  }
-
-  alert("🗑️ Frase eliminada correctamente");
-}
-
-function restaurarFrasesIniciales(){
-  const confirmar = confirm("Esto restaurará las frases iniciales. Las frases publicadas desde este navegador se reemplazarán. ¿Deseas continuar?");
-
-  if(!confirmar){
-    return;
-  }
-
-  frases = frasesIniciales.slice();
-  ultimoIndice = 0;
-  indiceEditando = null;
-
-  guardarFrases();
-  mostrarFrase(frases[0]);
-  renderizarListaFrases();
-
-  document.getElementById("nuevaFraseTexto").value = "";
-  document.getElementById("btnPublicar").innerText = "Publicar Frase";
-  document.getElementById("btnCancelar").style.display = "none";
-
-  alert("✅ Frases iniciales restauradas");
-}
-
-function renderizarListaFrases(){
-  const contenedor = document.getElementById("listaFrases");
-
-  if(!contenedor){
-    return;
-  }
-
-  contenedor.innerHTML = "";
-
-  if(frases.length === 0){
-    contenedor.innerHTML = "<p>No hay frases publicadas todavía.</p>";
-    return;
-  }
-
-  frases.forEach((frase, index) => {
-    const item = document.createElement("div");
-    item.className = "frase-item";
-
-    const texto = document.createElement("p");
-    texto.innerText = "“" + frase.texto + "”";
-
-    const fecha = document.createElement("small");
-    fecha.innerText = frase.fecha || "Publicado por By Andy";
-
-    const acciones = document.createElement("div");
-    acciones.className = "acciones-frase";
-
-    const btnEditar = document.createElement("button");
-    btnEditar.className = "editar";
-    btnEditar.innerText = "Editar";
-    btnEditar.onclick = function(){
-      editarFrase(index);
-    };
-
-    const btnEliminar = document.createElement("button");
-    btnEliminar.className = "eliminar";
-    btnEliminar.innerText = "Eliminar";
-    btnEliminar.onclick = function(){
-      eliminarFrase(index);
-    };
-
-    acciones.appendChild(btnEditar);
-    acciones.appendChild(btnEliminar);
-
-    item.appendChild(texto);
-    item.appendChild(fecha);
-    item.appendChild(acciones);
-
-    contenedor.appendChild(item);
-  });
+function eliminarPoesia(index){
+  if(!confirm("¿Seguro que quieres eliminar esta poesía?")) return;
+  poesias.splice(index, 1);
+  guardarPoesias();
+  renderizarFeed();
+  renderizarAdmin();
 }
 
 function cambiarModo(){
   document.body.classList.toggle("dark");
 
   if(document.body.classList.contains("dark")){
-    localStorage.setItem("modoFrases", "oscuro");
+    localStorage.setItem("modoPoesias", "oscuro");
     document.getElementById("modoBtn").innerText = "☀️ Claro";
   }else{
-    localStorage.setItem("modoFrases", "claro");
+    localStorage.setItem("modoPoesias", "claro");
     document.getElementById("modoBtn").innerText = "🌙 Oscuro";
   }
 }
 
 window.onload = function(){
-  const modoGuardado = localStorage.getItem("modoFrases");
-
-  if(modoGuardado === "oscuro"){
+  const modo = localStorage.getItem("modoPoesias");
+  if(modo === "oscuro"){
     document.body.classList.add("dark");
     document.getElementById("modoBtn").innerText = "☀️ Claro";
   }
-
-  if(frases.length > 0){
-    mostrarFrase(frases[0]);
-  }else{
-    mostrarFrase(null);
-  }
+  renderizarFeed();
 };
 </script>
-
 </body>
 </html>
